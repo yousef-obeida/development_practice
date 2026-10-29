@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Staff;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request ;
+use App\Http\Requests\StaffStoreRequest;
+use App\Http\Requests\StaffUpdateRequest;
+use App\Http\Resources\StaffResources;
+
 
 class StaffController
 {
@@ -13,24 +17,18 @@ class StaffController
     public function index()
     {
         $staff = Staff::all();
-        return response()->json($staff);
+        return StaffResources::collection($staff);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StaffStoreRequest $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:staff',
-            'position' => 'required|string|max:255',
-            'password' => 'required|string|min:8',
-        ]);
-
+        $validatedData = $request->validated();
         $staff = Staff::create($validatedData);
 
-        return response()->json($staff, 201);
+        return StaffResources::make($staff);
     }
 
     /**
@@ -38,36 +36,21 @@ class StaffController
      */
     public function show(string $id)
     {
-        $staff = Staff::find($id);
-
-        if (!$staff) {
-            return response()->json(['message' => 'Staff not found'], 404);
-        }
-
-        return response()->json($staff);
+        $staff = Staff::findOrFail($id);
+        return StaffResources::make($staff);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StaffUpdateRequest $request, string $id)
     {
-        $staff = Staff::find($id);
+        $staff = Staff::findOrFail($id);
 
-        if (!$staff) {
-            return response()->json(['message' => 'Staff not found'], 404);
-        }
-
-        $validatedData = $request->validate([
-            'name' => 'sometimes|required|string|max:255',
-            'email' => 'sometimes|required|string|email|max:255|unique:staff,email,' . $id,
-            'position' => 'sometimes|required|string|max:255',
-            'password' => 'sometimes|required|string|min:8',
-        ]);
-
+        $validatedData = $request->validated();
         $staff->update($validatedData);
 
-        return response()->json($staff);
+        return StaffResources::make($staff);
     }
 
     /**
@@ -75,12 +58,7 @@ class StaffController
      */
     public function destroy(string $id)
     {
-        $staff = Staff::find($id);
-
-        if (!$staff) {
-            return response()->json(['message' => 'Staff not found'], 404);
-        }
-
+        $staff = Staff::findOrFail($id);
         $staff->delete();
 
         return response()->json(['message' => 'Staff deleted successfully']);
