@@ -9,3 +9,5 @@ Route::get('/staff/{id}', [StaffController::class, 'show']);
 Route::post('/staff', [StaffController::class, 'store']);
 Route::put('/staff/{id}', [StaffController::class, 'update']);
 Route::delete('/staff/{id}', [StaffController::class, 'destroy']);
+
+Route::apiResource('customer', \App\Http\Controllers\CustomerController::class);
