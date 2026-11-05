@@ -8,7 +8,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Staff extends Authenticatable
 {
-    use HasApiTokens;
+    use HasApiTokens ;
     protected $table = 'staff';
     protected $fillable = [
      'name',
