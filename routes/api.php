@@ -16,6 +16,9 @@ Route::middleware('auth:staff')->group(function () {
     Route::delete('/staff/{id}', [StaffController::class, 'destroy']);
     Route::post('/staff/me', [\App\Http\Controllers\StaffAuthController::class, 'me']);
     Route::post('/staff/logout', [\App\Http\Controllers\StaffAuthController::class, 'logout']);
+    Route::post('/category', [\App\Http\Controllers\StaffAuthController::class, 'store']);
+    Route::put('/category/{category}', [\App\Http\Controllers\StaffAuthController::class, 'update']);
+    Route::delete('/category/{category}', [\App\Http\Controllers\StaffAuthController::class, 'destroy']);
 });
 
 
@@ -23,5 +26,10 @@ Route::middleware('auth:customer')->group(function () {
     Route::post('/customer/me', [\App\Http\Controllers\CustomerAuthController::class, 'me']);
     Route::post('/customer/logout', [\App\Http\Controllers\CustomerAuthController::class, 'logout']);
     Route::apiResource('customer', \App\Http\Controllers\CustomerController::class);
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/category', [\App\Http\Controllers\CategoryController::class, 'index']);
+    Route::get('/category/{category}', [\App\Http\Controllers\CategoryController::class, 'show']);
 });
 
