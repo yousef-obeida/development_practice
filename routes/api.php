@@ -19,6 +19,9 @@ Route::middleware('auth:staff')->group(function () {
     Route::post('/category', [\App\Http\Controllers\StaffAuthController::class, 'store']);
     Route::put('/category/{category}', [\App\Http\Controllers\StaffAuthController::class, 'update']);
     Route::delete('/category/{category}', [\App\Http\Controllers\StaffAuthController::class, 'destroy']);
+    Route::post('/book', [\App\Http\Controllers\StaffAuthController::class, 'store']);
+    Route::put('/book/{book}', [\App\Http\Controllers\StaffAuthController::class, 'update']);
+    Route::delete('/book/{book}', [\App\Http\Controllers\StaffAuthController::class, 'destroy']);
 });
 
 
@@ -31,5 +34,7 @@ Route::middleware('auth:customer')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/category', [\App\Http\Controllers\CategoryController::class, 'index']);
     Route::get('/category/{category}', [\App\Http\Controllers\CategoryController::class, 'show']);
+    Route::get('/book', [\App\Http\Controllers\BookController::class, 'index']);
+    Route::get('/book/{book}', [\App\Http\Controllers\BookController::class, 'show']);
 });
 
