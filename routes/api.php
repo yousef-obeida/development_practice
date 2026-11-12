@@ -29,6 +29,9 @@ Route::middleware('auth:customer')->group(function () {
     Route::post('/customer/me', [\App\Http\Controllers\CustomerAuthController::class, 'me']);
     Route::post('/customer/logout', [\App\Http\Controllers\CustomerAuthController::class, 'logout']);
     Route::apiResource('customer', \App\Http\Controllers\CustomerController::class);
+    Route::post('/borrow', [\App\Http\Controllers\BorrowingController::class, 'borrow']);
+    Route::get('/borrow', [\App\Http\Controllers\BorrowingController::class, 'index']);
+    Route::delete('/borrow/{id}', [\App\Http\Controllers\BorrowingController::class, 'destroy']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {

@@ -27,4 +27,8 @@ class Customer extends Authenticatable
     protected $casts = [
         'password' => 'hashed',
     ];
+    public function borrowing()
+    {
+        return $this->belongsToMany(Book::class, 'borrowing')->withPivot('borrowed_at', 'returned_at', 'is_returned')->withTimestamps();
+    }
 }
