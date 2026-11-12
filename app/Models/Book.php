@@ -7,11 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Book extends Authenticatable
+class Book extends Model
 {
-    use HasApiTokens;
     protected $fillable = ['title', 'author'];
 
     protected $table = 'book';
+
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
 }
 

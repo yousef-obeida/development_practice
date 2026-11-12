@@ -3,15 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Laravel\Sanctum\HasApiTokens; 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Category extends Authenticatable
+class Category extends Model
 {
-     use HasApiTokens;
     protected $table = 'category';
     protected $fillable = [
         'name',
         'description',
     ];
+    public function book(){
+        return $this->hasMany(Book::class);
+    }
 }
