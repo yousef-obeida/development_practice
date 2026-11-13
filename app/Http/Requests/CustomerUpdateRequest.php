@@ -24,10 +24,11 @@ class CustomerUpdateRequest extends FormRequest
     {
         return [
             'name' => 'sometimes|required|string|max:255',
-            'email' => 'sometimes|required|email|unique:customer,email,' . $this->route('id'),
+            'email' => 'sometimes|required|email|unique:customers,email,'.$this->route('id'),
             'phone_number' => 'sometimes|required|string|max:20',
             'address' => 'nullable|string',
             'city' => 'nullable|string|max:255',
+            'password' => 'sometimes|required|string|min:8',
         ];
     }
 }

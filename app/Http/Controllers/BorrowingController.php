@@ -11,26 +11,33 @@ class BorrowingController
      */
     public function index()
     {
-        $user=auth()->user();
-        return response()->json(["data"=>$user->books]);
+        $user = auth()->user();
+
+        return response()->json(['data' => $user->borrowing]);
     }
-    public function borrow(Request $request){
-        $user=auth()->user();
-        $data=$request->validate([
-            'book_id'=>'required|exists:books,id',
-            'borrowed_at'=>'required|date',
-            'returned_at'=>'required|date|after:borrowed_at',
+
+    public function borrow(Request $request)
+    {
+        $user = auth()->user();
+        $data = $request->validate([
+            'book_id' => 'required|exists:book,id',
+            'borrowed_at' => 'required|date',
+            'returned_at' => 'required|date|after:borrowed_at',
         ]);
-        $output=auth()->user()->books()->attach($data['book_id'],[
-            'borrowed_at'=>$data['borrowed_at'],
-            'returned_at'=>$data['returned_at'],
-            'is_returned'=>false,
+        auth()->user()->borrowing()->attach($data['book_id'], [
+            'borrowed_at' => $data['borrowed_at'],
+            'returned_at' => $data['returned_at'],
+            'is_returned' => false,
         ]);
-        return response()->json(["message"=>"Book borrowed successfully"]);
+
+        return response()->json(['message' => 'Book borrowed successfully']);
     }
-    public function destroy($id){
-        $user=auth()->user();
-        $user->books()->detach($id);
-        return response()->json(["message"=>"Book returned successfully"]);
+
+    public function destroy($id)
+    {
+        $user = auth()->user();
+        $user->borrowing()->detach($id);
+
+        return response()->json(['message' => 'Book returned successfully']);
     }
 }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('publisher');
             $table->integer('publication_year');
-            $table->unsignedBigInteger('category_id')->constrained('categories');
+            $table->foreignId('category_id')->constrained('category');
             $table->timestamps();
         });
     }

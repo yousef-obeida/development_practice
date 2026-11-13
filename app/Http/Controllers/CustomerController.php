@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CustomerStoreRequest;
-use App\Http\Requests\CustomerStoreResource;
-use Illuminate\Http\Request;
-use App\Models\Customer;
 use App\Http\Requests\CustomerUpdateRequest;
 use App\Http\Resources\CustomerResource;
+use App\Models\Customer;
 
 class CustomerController
 {
@@ -17,6 +15,7 @@ class CustomerController
     public function index()
     {
         $Customer = Customer::all();
+
         return CustomerResource::collection($Customer);
     }
 
@@ -25,7 +24,7 @@ class CustomerController
      */
     public function store(CustomerStoreRequest $request)
     {
-        $validatedData = $request->all();
+        $validatedData = $request->validated();
         $Customer = Customer::create($validatedData);
 
         return CustomerResource::make($Customer);
@@ -37,6 +36,7 @@ class CustomerController
     public function show(string $id)
     {
         $Customer = Customer::findOrFail($id);
+
         return CustomerResource::make($Customer);
     }
 
@@ -47,7 +47,7 @@ class CustomerController
     {
         $Customer = Customer::findOrFail($id);
 
-        $validatedData = $request->all();
+        $validatedData = $request->validated();
         $Customer->update($validatedData);
 
         return CustomerResource::make($Customer);

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Http\Requests\BookStoreRequest;
 use App\Http\Requests\BookUpdateRequest;
 use App\Http\Resources\BookResource;
@@ -13,19 +14,20 @@ class BookController
      */
     public function index()
     {
-        $book=Book::all();
+        $book = Book::all();
+
         return BookResource::collection($book);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(BookStoreRequest $request , Book $book)
+    public function store(BookStoreRequest $request, Book $book)
     {
-        $book->fill($request->validated());
+        $book = Book::create($request->validated());
+
         return new BookResource($book);
     }
-    
 
     /**
      * Display the specified resource.
@@ -41,6 +43,7 @@ class BookController
     public function update(BookUpdateRequest $request, Book $book)
     {
         $book->update($request->validated());
+
         return BookResource::make($book);
     }
 
@@ -50,6 +53,7 @@ class BookController
     public function destroy(Book $book)
     {
         $book->delete();
-        return response()->json(['message' => 'Book deleted successfully'], 204);
+
+        return response()->json(['message' => 'Book deleted successfully']);
     }
 }

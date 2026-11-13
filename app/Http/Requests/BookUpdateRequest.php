@@ -25,6 +25,10 @@ class BookUpdateRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'author' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
+            'publisher' => ['required', 'string', 'max:255'],
+            'publication_year' => ['required', 'integer', 'digits:4'],
+            'category_id' => ['required', 'exists:category,id'],
         ];
     }
 }

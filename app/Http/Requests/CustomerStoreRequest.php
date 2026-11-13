@@ -24,10 +24,11 @@ class CustomerStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:customer,email',
+            'email' => 'required|email|unique:customers,email',
             'phone_number' => 'required|string|max:20',
             'address' => 'nullable|string',
             'city' => 'nullable|string|max:255',
+            'password' => 'required|string|min:8',
         ];
     }
 }

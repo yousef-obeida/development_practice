@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -14,7 +15,7 @@ return new class extends Migration {
             $table->id();
             $table->timestamps();
             $table->foreignId('customer_id')->constrained('customers');
-            $table->foreignId('book_id')->constrained('books');
+            $table->foreignId('book_id')->constrained('book');
             $table->date('borrowed_at');
             $table->date('returned_at');
             $table->boolean('is_returned');

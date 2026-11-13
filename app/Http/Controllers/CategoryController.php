@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Http\Requests\CategoryStoreRequest;
 use App\Http\Requests\CategoryUpdateRequest;
-use App\Models\Category;
 use App\Http\Resources\CategoryResource;
-use Illuminate\Http\Request;
+use App\Models\Category;
 
 class CategoryController
 {
@@ -15,6 +15,7 @@ class CategoryController
     public function index()
     {
         $categories = Category::all();
+
         return CategoryResource::collection($categories);
     }
 
@@ -23,7 +24,8 @@ class CategoryController
      */
     public function store(CategoryStoreRequest $request, Category $category)
     {
-        $category->fill($request->validated());
+        $category = Category::create($request->validated());
+
         return new CategoryResource($category);
     }
 
@@ -41,6 +43,7 @@ class CategoryController
     public function update(Category $category, CategoryUpdateRequest $request)
     {
         $category->update($request->validated());
+
         return CategoryResource::make($category);
     }
 
@@ -50,6 +53,7 @@ class CategoryController
     public function destroy(Category $category)
     {
         $category->delete();
+
         return response()->json(['message' => 'Category deleted successfully']);
     }
 }
