@@ -24,6 +24,8 @@ class BookResource extends JsonResource
             'category_id' => $this->category_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'ISBN' => $this->ISBN,
+            'is_available' => ! $this->customers()->wherePivot('is_returned', false)->exists()
         ];
     }
 }

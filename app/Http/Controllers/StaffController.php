@@ -25,6 +25,10 @@ class StaffController
      */
     public function store(StaffStoreRequest $request)
     {
+        if (auth ()->user()->role !== 'admin') {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
         $validatedData = $request->validated();
         $staff = Staff::create($validatedData);
 
@@ -45,6 +49,10 @@ class StaffController
      */
     public function update(StaffUpdateRequest $request, string $id)
     {
+        if (auth ()->user()->role !== 'admin') {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
         $staff = Staff::findOrFail($id);
 
         $validatedData = $request->validated();
@@ -58,6 +66,10 @@ class StaffController
      */
     public function destroy(string $id)
     {
+        if (auth ()->user()->role !== 'admin') {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+        
         $staff = Staff::findOrFail($id);
         $staff->delete();
 

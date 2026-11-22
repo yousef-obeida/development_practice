@@ -56,4 +56,18 @@ class BookController
 
         return response()->json(['message' => 'Book deleted successfully']);
     }
+
+    public function getBooksByCategory(Request $request)
+    {
+        $query = Book::query();
+
+        if($request->search){
+            $query->where("name", "like", "%".$request->search."%");
+        }
+        if ($request->category_id) {
+            $query->where("category_id", $request->category_id);
+        }
+        
+        return BookResource::collection( $query->get());
+    }
 }

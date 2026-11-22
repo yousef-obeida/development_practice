@@ -22,8 +22,13 @@ class Book extends Model
         return $this->belongsToMany(Category::class);
     }
 
-    public function borrowing()
+    public function customers()
     {
         return $this->belongsToMany(Customer::class, 'borrowing')->withPivot('borrowed_at', 'returned_at', 'is_returned')->withTimestamps();
+    }
+
+    public function borrowing()
+    {
+        return $this->customers();
     }
 }

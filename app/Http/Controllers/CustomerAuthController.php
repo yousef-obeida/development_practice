@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Requests\CustomerStoreRequest;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -42,5 +43,15 @@ class CustomerAuthController
         return response()->json(['message' => 'Logged out successfully']);
     }
 
+    public function register(CustomerStoreRequest $request)
+    {
+        $customer = Customer::create([$request->validated()]);
+        $token = $customer->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'message' => 'Registration successful',
+            'token' => $token
+        ]);
+    }
 }
 
